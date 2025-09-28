@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Pasta</title>
+  <style>
+    #cake {
+      font-size: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Doğum Günü Pastası 🎂</h1>
+  <div id="cake"></div>
+
+  <button onclick="addCandle()">Mum DİK</button>
+  <button onclick="set24()">24 Mum DİK</button>
+
+  <script>
+    let candleCount = 0;
+
+    function addCandle() {
+      candleCount++;
+      const cake = document.getElementById("cake");
+      const candle = document.createElement("span");
+      candle.innerText = "🕯️";
+      cake.appendChild(candle);
+      setCandles(candleCount); // URL’ye yaz
+    }
+
+    // 24 mumu direkt dik
+    function set24() {
+      candleCount = 24;
+      const cake = document.getElementById("cake");
+      cake.innerHTML = ""; // temizle
+      for (let i = 0; i < 24; i++) {
+        const candle = document.createElement("span");
+        candle.innerText = "🕯️";
+        cake.appendChild(candle);
+      }
+      setCandles(24); // URL'ye 24 yaz
+    }
+
+    // URL'ye mum sayısını yaz
+    function setCandles(count) {
+      const url = new URL(window.location);
+      url.searchParams.set("candles", count);
+      window.history.pushState({}, "", url);
+    }
+
+    // Sayfa açıldığında URL'den mumları oku
+    window.onload = () => {
+      const params = new URLSearchParams(window.location.search);
+      const candles = params.get("candles") || 0;
+      for (let i = 0; i < candles; i++) {
+        addCandle();
+      }
+    };
+  </script>
+</body>
+</html>
